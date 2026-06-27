@@ -90,6 +90,8 @@ import { StreamingLinks } from "./detail/streaming-links";
 import { WatchOn } from "./detail/watch-on";
 import { InfoBlock } from "./detail/info-block";
 import { TraktComments } from "./detail/trakt-comments";
+import { LetterboxdPanel } from "./detail/letterboxd-panel";
+import { LetterboxdReviews } from "./detail/letterboxd-reviews";
 import { AnilistComments } from "./detail/anilist-comments";
 import { stremioIdToTraktTarget } from "@/lib/trakt/ids";
 import type { IdResolution } from "@/lib/trakt/ids";
@@ -1168,12 +1170,44 @@ export function DetailView({
               node: <InfoBlock detail={detail} isAnime={isAnime} />,
             });
           }
-          if (settings.showTraktComments === true) {
+          if (settings.showTraktComments === true && !isAnime) {
             railSections.push({
               key: "traktComments",
               label: t("Comments"),
               minHeight: 120,
               node: <TraktComments resolution={traktResolution} />,
+            });
+          }
+          if (!isAnime) {
+            railSections.push({
+              key: "letterboxdPanel",
+              label: t("Letterboxd"),
+              minHeight: 120,
+              node: (
+                <LetterboxdPanel
+                  meta={meta}
+                  imdbId={detail?.imdbId ?? (meta.id.startsWith("tt") ? meta.id : null)}
+                />
+              ),
+            });
+            railSections.push({
+              key: "letterboxdReviews",
+              label: t("Letterboxd Reviews"),
+              minHeight: 120,
+              node: (
+                <LetterboxdReviews
+                  meta={meta}
+                  imdbId={detail?.imdbId ?? (meta.id.startsWith("tt") ? meta.id : null)}
+                />
+              ),
+            });
+          }
+          if (isAnime) {
+            railSections.push({
+              key: "anilistComments",
+              label: t("Anilist Comments"),
+              minHeight: 120,
+              node: <AnilistComments harborId={animeCanonicalId ?? meta.id} />,
             });
           }
           if (railSections.length === 0) return null;
