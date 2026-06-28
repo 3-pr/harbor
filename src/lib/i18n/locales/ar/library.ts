@@ -128,6 +128,14 @@ const library: Record<string, string> = {
   "Add a TMDB key in Settings to unlock the full discovery feed.":
     "أضف مفتاح TMDB في الإعدادات لفتح موجز الاكتشاف الكامل.",
   "No picks loaded. TMDB might be unreachable.": "لم تُحمّل أي اختيارات. قد يتعذّر الوصول إلى TMDB.",
+
+  // Subtitle download
+  "Download Subtitle": "تحميل الترجمة",
+  "Choose subtitle language": "اختر لغة الترجمة",
+  "Subtitle downloaded": "تم تحميل الترجمة",
+  "Download Subtitle failed": "فشل تحميل الترجمة",
+  "Retry Arabic": "إعادة المحاولة بالعربية",
+  "Retry English": "إعادة المحاولة بالإنجليزية",
 };
 
 export default library;
