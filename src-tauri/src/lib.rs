@@ -1,4 +1,5 @@
 mod anime4k;
+mod app_icon;
 mod asr_model;
 mod binary_lookup;
 mod browser;
@@ -846,6 +847,7 @@ pub fn run() {
             discord_auth::discord_auth_start,
             song_id::recognize_now_playing,
             song_id::recognize_now_playing_ai,
+            app_icon::set_app_icon,
             deeplink_set_stremio,
             deeplink_is_stremio_registered,
             harbor_take_pending_file,

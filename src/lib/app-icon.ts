@@ -17,16 +17,15 @@ export type ApplyIconResult = { ok: true } | { ok: false; reason: string };
 
 export async function applyAppIcon(dataUrl: string): Promise<ApplyIconResult> {
   if (!isTauri()) return { ok: false, reason: "not running in the desktop app" };
-  if (!dataUrl) return { ok: false, reason: "no icon selected" };
-  const bytes = dataUrlToBytes(dataUrl);
-  if (!bytes) return { ok: false, reason: "could not read the icon image" };
+  const bytes = dataUrl ? dataUrlToBytes(dataUrl) : null;
+  if (dataUrl && !bytes) return { ok: false, reason: "could not read the icon image" };
   try {
-    const { getCurrentWindow } = await import("@tauri-apps/api/window");
-    await getCurrentWindow().setIcon(bytes);
+    const { invoke } = await import("@tauri-apps/api/core");
+    await invoke("set_app_icon", { imageBytes: bytes ? Array.from(bytes) : null });
     return { ok: true };
   } catch (err) {
     const reason = err instanceof Error ? err.message : String(err);
-    console.error("[harbor] app icon setIcon failed:", reason);
+    console.error("[harbor] app icon set_app_icon failed:", reason);
     return { ok: false, reason };
   }
 }
